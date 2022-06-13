@@ -3,6 +3,4 @@ include 'service',
         'repository',
         'REST_client',
         'REST_model',
-        'component_tests',
-        'integration_tests',
-        'swagger_specs'
+        'component_tests'
