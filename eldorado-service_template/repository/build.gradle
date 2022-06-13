@@ -1,0 +1,19 @@
+description = 'repository'
+
+configurations {
+    compileOnly {
+        extendsFrom annotationProcessor
+    }
+}
+
+dependencies {
+    implementation libs.springboot_starter_data_jpa
+    compileOnly libs.lombok
+    annotationProcessor libs.lombok
+
+    // club test libs together
+    testCompileOnly libs.lombok
+    testAnnotationProcessor libs.lombok
+
+}
+

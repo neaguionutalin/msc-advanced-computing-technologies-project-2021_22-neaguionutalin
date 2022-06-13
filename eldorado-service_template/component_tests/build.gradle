@@ -1,0 +1,49 @@
+description = 'component tests'
+
+configurations {
+    compileOnly {
+        extendsFrom annotationProcessor
+    }
+}
+
+dependencies {
+
+    implementation libs.amazon_java_sdk_s3
+    implementation libs.amazon_java_sdk_core
+
+    implementation libs.spring_open_api
+    implementation libs.springboot_web_starter
+    implementation libs.springboot_actuator
+    implementation libs.springboot_starter_data_jpa
+
+    implementation libs.camel_spring_boot_starter
+    implementation libs.camel_activemq_starter
+    implementation libs.camel_spring_boot_open_tracing
+    implementation libs.jackson_jsr310
+
+    implementation libs.liquibase_core
+    implementation libs.hibernate_ehcache
+    implementation libs.springboot_starter_validation
+    implementation libs.mysql_connector
+
+    // ******club test libs together*********
+    testCompileOnly libs.lombok
+    testAnnotationProcessor libs.lombok
+    def withoutJunitVintage = {
+        exclude group: 'org.juniItt.vintage', module: 'junit-vintage-engine'
+    }
+    testImplementation test_libs.springboot_starter_test, withoutJunitVintage
+    testImplementation test_libs.assertJ_core
+    testImplementation test_libs.mysql_testcontainer
+    testImplementation test_libs.camel_test_spring
+    testImplementation test_libs.awaitility
+    testImplementation test_libs.json_assert
+    testImplementation project(':service').sourceSets.main.output
+    testImplementation project(':repository')
+    testImplementation project(':REST_model')
+
+}
+
+test {
+    useJUnitPlatform()
+}

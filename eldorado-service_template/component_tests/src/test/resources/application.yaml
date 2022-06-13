@@ -1,0 +1,96 @@
+server:
+  port: 9095
+
+schema_name: ${spring.application.name}
+
+aws:
+  region: eu-central-1
+
+spring:
+  application:
+    name: template
+  datasource:
+    url: jdbc:tc:mysql:5.6://hostname/${schema_name}?createDatabaseIfNotExist=true
+    hikari:
+      username: root
+      password: root
+      auto-commit: true
+      pool-name: ${spring.application.name}-pool
+      data-source-properties:
+        cachePrepStmts: true
+        prepStmtCacheSize: 250
+        prepStmtCacheSqlLimit: 2048
+        useServerPrepStmts: true
+        useLocalSessionState: true
+        rewriteBatchedStatements: true
+        cacheResultSetMetadata: true
+        cacheServerConfiguration: true
+        elideSetAutoCommits: true
+        maintainTimeStats: false
+        serverTimezone: UTC
+  jpa:
+    database-platform: org.hibernate.dialect.MySQLDialect
+  liquibase:
+    enabled: true
+    rollback-file: ../service/src/main/resources/db/rollback/rollback.sql
+    test-rollback-on-update: true
+
+camel:
+  springboot:
+    main-run-controller: true
+    tracing: true
+  component:
+    activemq:
+      broker-url: tcp://localhost:61617
+  dataformat:
+    json-jackson:
+      module-class-names: com.fasterxml.jackson.datatype.jsr310.JavaTimeModule
+      disable-features: WRITE_DATE_TIMESTAMPS_AS_NANOSECONDS,WRITE_DATES_AS_TIMESTAMPS
+
+logging:
+  level:
+    com.eldorado: INFO
+    org.hibernate.SQL: INFO
+    com.zaxxer.hikari.HikariConfig: DEBUG
+    "liquibase": INFO
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: '*'
+  endpoint:
+    health:
+      show-details: always
+  metrics:
+    tags:
+      host: localhost
+      application: ${spring.application.name}
+    export:
+      elastic:
+        enabled: true
+        step: 10s
+        host: http://localhost:9200
+        auto-create-index: true
+        index: micrometer-metrics
+    distribution:
+      percentiles-histogram:
+        http:
+          server:
+            requests: true
+      percentiles:
+        http:
+          server:
+            requests: 0.5, 0.9, 0.95, 0.99
+      slo:
+        http:
+          server:
+            requets: 100ms, 400ms, 500ms, 2000ms
+
+opentracing:
+  spring:
+    web:
+      enabled: true
+    cloud:
+      log:
+        enabled: true

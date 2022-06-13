@@ -1,0 +1,72 @@
+ext {
+    version = [
+            activemq  : "5.15.8",
+            camel     : "3.8.0",
+            springboot: "2.4.2",
+            spring_cloud_consul: "3.0.1"
+    ]
+
+    withoutJunitVintage = {
+        exclude group: 'org.junit.vintage', module: 'junit-vintage-engine'
+    }
+
+    test_libs = [
+            camel_test_spring      : "org.apache.camel:camel-test-spring:${version.camel}",
+            springboot_starter_test: "org.springframework.boot:spring-boot-starter-test:${version.springboot}",
+            assertJ_core           : "org.assertj:assertj-core:3.17.2",
+            mockito_core           : "org.mockito:mockito-core:3.5.13",
+            awaitility             : "org.awaitility:awaitility:4.0.3",
+            mysql_testcontainer    : "org.testcontainers:mysql:1.15.0-rc2",
+            json_assert            : "org.skyscreamer:jsonassert:1.5.0"
+    ]
+
+    libs = [
+            lombok                          : "org.projectlombok:lombok:1.18.14",
+
+            amazon_java_sdk_s3              : "com.amazonaws:aws-java-sdk-s3:1.11.415",
+            amazon_java_sdk_core            : "com.amazonaws:aws-java-sdk-core:1.11.882",
+
+            currencycloud                   : "com.currencycloud.currencycloud-java:currencycloud-java:3.5.1",
+
+            mysql_connector                 : "mysql:mysql-connector-java:8.0.24",
+            liquibase_core                  : "org.liquibase:liquibase-core:4.3.5",
+            liquibase_groovy_dsl            : "org.liquibase:liquibase-groovy-dsl:3.0.0",
+
+            hibernate_ehcache               : "org.hibernate:hibernate-ehcache:5.4.22.Final",
+
+
+            spring_open_api                 : "org.springdoc:springdoc-openapi-ui:1.4.8",
+            springboot_web_starter          : "org.springframework.boot:spring-boot-starter-web:${version.springboot}",
+            springboot_actuator             : "org.springframework.boot:spring-boot-starter-actuator:${version.springboot}",
+            springboot_starter_data_jpa     : "org.springframework.boot:spring-boot-starter-data-jpa:${version.springboot}",
+            springboot_starter_validation   : "org.springframework.boot:spring-boot-starter-validation:${version.springboot}",
+            spring_cloud_consul_discovery   : "org.springframework.cloud:spring-cloud-starter-consul-discovery:${version.spring_cloud_consul}",
+
+            opentracing_spring_cloud_starter: "io.opentracing.contrib:opentracing-spring-cloud-starter:0.5.8",
+            micrometer_registry_elastic     : "io.micrometer:micrometer-registry-elastic:1.6.4",
+            elastic_apm_agent_attacher      : "co.elastic.apm:apm-agent-attach:1.21.0",
+
+            java_awt                        : "com.auth0:java-jwt:3.10.2",
+            javax_valdiation_api            : "javax.validation:validation-api:2.0.1.Final",
+            everit_json                     : "org.everit.json:org.everit.json.schema:1.3.0",
+
+            commons_codec                   : "commons-codec:commons-codec:1.15",
+
+            activemq_client                 : "org.apache.activemq:activemq-client:${version.activemq}",
+            activemq_pool                   : "org.apache.activemq:activemq-pool:${version.activemq}",
+
+            camel_activemq_starter          : "org.apache.camel.springboot:camel-activemq-starter:${version.camel}",
+            camel_spring_boot_starter       : "org.apache.camel.springboot:camel-spring-boot-starter:${version.camel}",
+            camel_spring_boot_open_tracing  : "org.apache.camel.springboot:camel-opentracing-starter:${version.camel}",
+
+            jackson_core                    : "com.fasterxml.jackson.core:jackson-core:2.5.2",
+            jackson_databind                : "com.fasterxml.jackson.core:jackson-databind:2.5.2",
+            jackson_jsr310                  : "com.fasterxml.jackson.datatype:jackson-datatype-jsr310",
+
+            redis_client                    : "redis.clients:jedis:3.2.0",
+
+            logback_logstash                : "net.logstash.logback:logstash-logback-encoder:6.4"
+
+
+    ]
+}
