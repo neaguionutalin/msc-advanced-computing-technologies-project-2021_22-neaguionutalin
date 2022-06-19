@@ -1,0 +1,6 @@
+rootProject.name = 'eldorado-mock_vendor'
+include 'service',
+        'repository',
+        'REST_client',
+        'REST_model',
+        'component_tests'

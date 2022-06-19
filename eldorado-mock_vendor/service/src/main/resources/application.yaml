@@ -1,0 +1,108 @@
+server:
+  port: 9095
+
+schema_name: ${spring.application.name}
+
+spring:
+  application:
+    name: vendor-mock
+  datasource:
+    url: jdbc:mysql://${mysql_rds_host}:${mysql_rds_port}/${schema_name}?createDatabaseIfNotExist=true
+    hikari:
+      username: ${mysql_rds_username}
+      password: ${mysql_rds_password}
+      auto-commit: true
+      pool-name: ${spring.application.name}-pool
+      data-source-properties:
+        cachePrepStmts: true
+        prepStmtCacheSize: 250
+        prepStmtCacheSqlLimit: 2048
+        useServerPrepStmts: true
+        useLocalSessionState: true
+        rewriteBatchedStatements: true
+        cacheResultSetMetadata: true
+        cacheServerConfiguration: true
+        elideSetAutoCommits: true
+        maintainTimeStats: false
+        serverTimezone: UTC
+  jpa:
+    database-platform: org.hibernate.dialect.MySQLDialect
+    hibernate:
+      naming:
+        physical-strategy: org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl
+        implicit-strategy: org.hibernate.boot.model.naming.ImplicitNamingStrategyLegacyJpaImpl
+    show-sql: false
+    properties:
+      hibernate.jdbc.time_zone: UTC
+      hibernate.cache.use_second_level_cache: true
+      hibernate.cache.region.factory_class: org.hibernate.cache.ehcache.EhCacheRegionFactory
+      javax.persistence.sharedCache: ENABLE_SELECTIVE
+  liquibase:
+    enabled: true
+    rollback-file: /app/service/liquibase/rollback.sql
+    test-rollback-on-update: true
+    contexts: ref-data
+
+camel:
+  springboot:
+    main-run-controller: true
+    tracing: true
+  component:
+    activemq:
+      broker-url: ${activemq-host}
+      username: ${activemq-username}
+      password: ${activemq-password}
+  dataformat:
+    json-jackson:
+      module-class-names: com.fasterxml.jackson.datatype.jsr310.JavaTimeModule
+      disable-features: WRITE_DATE_TIMESTAMPS_AS_NANOSECONDS,WRITE_DATES_AS_TIMESTAMPS
+
+logging:
+  level:
+    com.eldorado: INFO
+    org.hibernate.SQL: INFO
+    "liquibase": INFO
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: '*'
+  endpoint:
+    health:
+      show-details: always
+  metrics:
+    tags:
+      host: ${HOSTNAME}
+      application: ${spring.application.name}
+    export:
+      elastic:
+        enabled: true
+        step: 10s
+        host: ${elasticsearch-host}
+        auto-create-index: true
+        index: micrometer-metrics
+        user-name: ${elasticsearch-username}
+        password: ${elasticsearch-password}
+    distribution:
+      percentiles-histogram:
+        http:
+          server:
+            requests: true
+      percentiles:
+        http:
+          server:
+            requests: 0.5, 0.9, 0.95, 0.99
+      slo:
+        http:
+          server:
+            requets: 100ms, 400ms, 500ms, 2000ms
+
+
+opentracing:
+  spring:
+    web:
+      enabled: true
+    cloud:
+      log:
+        enabled: true

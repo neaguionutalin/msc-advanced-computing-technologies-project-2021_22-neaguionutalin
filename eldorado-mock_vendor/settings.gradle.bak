@@ -1,0 +1,6 @@
+rootProject.name = 'eldorado-service_template'
+include 'service',
+        'repository',
+        'REST_client',
+        'REST_model',
+        'component_tests'

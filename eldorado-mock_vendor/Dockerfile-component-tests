@@ -1,0 +1,6 @@
+ARG VERSION=17
+FROM openjdk:${VERSION}-jdk as BUILD
+COPY  . /home/app/
+WORKDIR /home/app/component_tests
+RUN chmod 777 -R /home/app/
+CMD  ["../gradlew", "clean", "test"]
