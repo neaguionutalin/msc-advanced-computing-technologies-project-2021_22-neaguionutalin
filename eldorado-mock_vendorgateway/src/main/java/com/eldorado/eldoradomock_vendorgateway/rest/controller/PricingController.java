@@ -19,6 +19,10 @@ import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 public class PricingController {
   private final PricingService pricingService;
 
+  /**
+   * @param symbol optional query parameter to query by symbol
+   * @return a list of all pricing objects
+   */
   @GetMapping(path = "/api/v1/mock/pricing", produces = APPLICATION_JSON_VALUE)
   public List<PricingDTO> getPrices(
       @RequestParam(value = "symbol", required = false) Optional<String> symbol) {

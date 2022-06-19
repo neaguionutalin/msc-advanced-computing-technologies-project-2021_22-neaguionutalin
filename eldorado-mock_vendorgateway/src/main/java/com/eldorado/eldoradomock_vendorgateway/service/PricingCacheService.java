@@ -35,6 +35,7 @@ public class PricingCacheService {
               .map(PricingDbDTO::getPrice)
               .toList());
     }
+    updatePrices();
   }
 
   /**

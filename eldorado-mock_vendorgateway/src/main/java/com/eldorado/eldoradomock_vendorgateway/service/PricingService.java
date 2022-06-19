@@ -14,6 +14,10 @@ public class PricingService {
 
   private final PricingCacheService pricingCacheService;
 
+  /**
+   * @param symbol optional query parameter to query by symbol
+   * @return a list of all pricing objects
+   */
   public List<PricingDTO> getPrices(Optional<String> symbol) {
     List<String> symbols = pricingCacheService.getSymbols();
     if (symbol.isPresent()) {

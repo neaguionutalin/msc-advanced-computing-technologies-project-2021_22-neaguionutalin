@@ -1,6 +1,7 @@
 package com.eldorado.eldoradomock_vendorgateway.repositories.entity;
 
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -14,6 +15,7 @@ import java.math.BigDecimal;
 @Table(name = "MarketPrices")
 @NoArgsConstructor
 @AllArgsConstructor
+@Builder
 public class PricingDbDTO {
 
     @Id
