@@ -1,0 +1,4 @@
+databaseChangeLog:
+  - include:
+      file: ./changes/00001_load_market_prices.xml
+      relativeToChangelogFile: true

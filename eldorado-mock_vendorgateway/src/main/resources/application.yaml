@@ -1,0 +1,44 @@
+server:
+  port: 9095
+
+schema_name: ${spring.application.name}
+
+
+spring:
+  application:
+    name: vendor-mock
+  datasource:
+    url: jdbc:mysql://${mysql_rds_host}:${mysql_rds_port}/${schema_name}?createDatabaseIfNotExist=true
+    hikari:
+      username: ${mysql_rds_username}
+      password: ${mysql_rds_password}
+      auto-commit: true
+      pool-name: ${spring.application.name}-pool
+      data-source-properties:
+        cachePrepStmts: true
+        prepStmtCacheSize: 250
+        prepStmtCacheSqlLimit: 2048
+        useServerPrepStmts: true
+        useLocalSessionState: true
+        rewriteBatchedStatements: true
+        cacheResultSetMetadata: true
+        cacheServerConfiguration: true
+        elideSetAutoCommits: true
+        maintainTimeStats: false
+        serverTimezone: UTC
+    jpa:
+      database-platform: org.hibernate.dialect.MySQLDialect
+      hibernate:
+        naming:
+          physical-strategy: org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl
+          implicit-strategy: org.hibernate.boot.model.naming.ImplicitNamingStrategyLegacyJpaImpl
+      show-sql: false
+      properties:
+        hibernate.jdbc.time_zone: UTC
+        hibernate.cache.use_second_level_cache: true
+        hibernate.cache.region.factory_class: org.hibernate.cache.ehcache.EhCacheRegionFactory
+        javax.persistence.sharedCache: ENABLE_SELECTIVE
+    liquibase:
+      enabled: true
+      rollback-file: /app/service/liquibase/rollback.sql
+      test-rollback-on-update: true

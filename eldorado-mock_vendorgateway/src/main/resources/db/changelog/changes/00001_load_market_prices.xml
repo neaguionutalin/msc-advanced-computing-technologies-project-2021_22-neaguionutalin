@@ -1,0 +1,37 @@
+<?xml version="1.1" encoding="UTF-8" standalone="no"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.9.xsd">
+
+    <changeSet id="00001-1" author="alin">
+        <tagDatabase tag="1.0.0"/>
+    </changeSet>
+
+    <changeSet id="00001-2" author="alin">
+        <createTable tableName="market_prices">
+            <column name="Id" type="INT">
+                <constraints primaryKey="true"/>
+            </column>
+            <column name="Symbol" type="VARCHAR(10)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="Price" type="DECIMAL(12,2)">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+
+    <changeSet id="00001-3" author="alin" runOnChange="true">
+        <validCheckSum>any</validCheckSum>
+        <loadUpdateData tableName="market_prices" schemaName="vendor-mock" primaryKey="Id"
+                        file="db/reference-date/MarketPrices.csv"/>
+        <rollback>
+            <sql splitStatements="true">
+                SET FOREIGN_KEY_CHECKS = 0;
+                TRUNCATE vendor-mock.MarketPrices;
+                SET FOREIGN_KEY_CHECKS = 1;
+            </sql>
+        </rollback>
+    </changeSet>
+
+</databaseChangeLog>
