@@ -1,0 +1,4 @@
+databaseChangeLog:
+  - include:
+      file: ./changes/00001_vendorgateway_init.xml
+      relativeToChangelogFile: true

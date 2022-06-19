@@ -24,6 +24,12 @@ dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-logging'
     implementation 'org.springframework.boot:spring-boot-starter-actuator'
     implementation 'org.springframework.boot:spring-boot-starter-web'
+    implementation 'org.springframework.boot:spring-boot-starter-validation'
+
+    implementation 'org.apache.camel.springboot:camel-activemq-starter:3.16.0'
+    implementation 'org.apache.camel.springboot:camel-spring-boot-starter:3.16.0'
+    implementation 'org.apache.camel.springboot:camel-jackson-starter:3.16.0'
+    implementation 'org.apache.camel:camel-jackson:3.16.0'
 
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
 
@@ -35,6 +41,13 @@ dependencies {
 
     implementation 'org.liquibase:liquibase-core:4.12.0'
     implementation 'org.liquibase:liquibase-groovy-dsl:3.0.2'
+
+    implementation 'com.fasterxml.jackson.core:jackson-core:2.13.3'
+    implementation 'com.fasterxml.jackson.core:jackson-databind:2.13.3'
+    implementation 'com.fasterxml.jackson.datatype:jackson-datatype-jsr310'
+
+//    implementation 'org.apache.activemq:activemq-client:5.18.8'
+//    implementation 'org.apache.activemq:activemq-pool:5.18.8'
 }
 
 tasks.named('test') {

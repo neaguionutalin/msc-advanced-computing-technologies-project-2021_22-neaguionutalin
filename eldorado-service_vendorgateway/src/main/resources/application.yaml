@@ -1,11 +1,14 @@
+vendor:
+  uri: 'http://localhost:9095'
+  market-data: '/api/v1/mock/pricing'
 server:
-  port: 9095
+  port: 9096
 
 schema_name: ${spring.application.name}
 
 spring:
   application:
-    name: vendor-mock
+    name: vendor-service
   datasource:
     url: jdbc:mysql://${mysql_rds_host}:${mysql_rds_port}/${schema_name}?createDatabaseIfNotExist=true
     hikari:
