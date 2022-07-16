@@ -4,7 +4,7 @@ plugins {
     id 'java'
 }
 
-group = 'com.eldorado'
+group = 'com.example'
 version = '0.0.1-SNAPSHOT'
 sourceCompatibility = '17'
 
@@ -21,15 +21,9 @@ repositories {
 dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-data-redis'
     implementation 'org.springframework.boot:spring-boot-starter-web'
-    implementation 'org.springframework.boot:spring-boot-starter-data-redis'
     compileOnly 'org.projectlombok:lombok'
     annotationProcessor 'org.projectlombok:lombok'
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
-
-    implementation 'org.apache.camel.springboot:camel-activemq-starter:3.16.0'
-    implementation 'org.apache.camel.springboot:camel-spring-boot-starter:3.16.0'
-    implementation 'org.apache.camel.springboot:camel-jackson-starter:3.16.0'
-    implementation 'org.apache.camel:camel-jackson:3.16.0'
 }
 
 tasks.named('test') {
