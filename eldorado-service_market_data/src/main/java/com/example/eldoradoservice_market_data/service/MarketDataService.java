@@ -28,6 +28,7 @@ public class MarketDataService {
     RedisKey redisKey = new RedisKey(symbol);
     Set<String> symbolKeysBids;
     Set<String> symbolKeysOffers;
+    int end = marketDataType == MarketDataType.TOP ? 0 : -1;
     if (entryType.isEmpty()) {
       symbolKeysBids = stringRedisTemplate.keys(redisKey.getBidKey());
       symbolKeysOffers = stringRedisTemplate.keys(redisKey.getOfferKey());
@@ -48,25 +49,25 @@ public class MarketDataService {
     Set<TypedTuple<String>> bids;
     if (bidKeys.size() == 0) bids = new HashSet<>();
     else if (bidKeys.size() == 1)
-      bids = stringRedisTemplate.opsForZSet().reverseRangeByScoreWithScores(bidKeys.get(0), 0, -1);
+      bids = stringRedisTemplate.opsForZSet().reverseRangeByScoreWithScores(bidKeys.get(0), 0, end);
     else {
       String uuid = UUID.randomUUID().toString();
       stringRedisTemplate
           .opsForZSet()
           .unionAndStore(bidKeys.get(0), bidKeys.subList(1, bidKeys.size()), UNION + uuid);
-      bids = stringRedisTemplate.opsForZSet().reverseRangeByScoreWithScores(UNION + uuid, 0, -1);
+      bids = stringRedisTemplate.opsForZSet().reverseRangeByScoreWithScores(UNION + uuid, 0, end);
     }
 
     Set<TypedTuple<String>> offers;
     if (offerKeys.size() == 0) offers = new HashSet<>();
     else if (offerKeys.size() == 1)
-      offers = stringRedisTemplate.opsForZSet().rangeByScoreWithScores(offerKeys.get(0), 0, -1);
+      offers = stringRedisTemplate.opsForZSet().rangeByScoreWithScores(offerKeys.get(0), 0, end);
     else {
       String uuid = UUID.randomUUID().toString();
       stringRedisTemplate
           .opsForZSet()
           .unionAndStore(offerKeys.get(0), offerKeys.subList(1, offerKeys.size()), UNION + uuid);
-      offers = stringRedisTemplate.opsForZSet().rangeByScoreWithScores(UNION + uuid, 0, -1);
+      offers = stringRedisTemplate.opsForZSet().rangeByScoreWithScores(UNION + uuid, 0, end);
     }
     if (bids == null) {
       bids = new HashSet<>();
