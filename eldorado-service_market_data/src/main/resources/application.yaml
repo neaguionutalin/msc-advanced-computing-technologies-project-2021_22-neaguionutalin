@@ -1,0 +1,12 @@
+server:
+  port: 9098
+
+spring:
+  application:
+    name: 'market_data'
+    redis:
+      client-name: ${spring.application.name}-${HOSTNAME}
+      host: ${REDIS_HOST}
+      port: ${REDIS_CLUSTER_PORT}
+      password: ${REDIS_TOKEN}
+      ssl: {REDIS_SSL}

@@ -1,10 +1,14 @@
-vendor:
-  uri: 'http://localhost:9095'
-  market-data: '/api/v1/mock/pricing'
 server:
   port: 9096
 
 schema_name: ${spring.application.name}
+
+vendor:
+  uri: 'http://localhost:9095'
+  market-data: '/api/v1/mock/pricing'
+
+route-config:
+  pricing: 'activemq:topic:VirtualTopic.pricing.marketdata?jmsMessageType=Text&testConnectionOnStartup=true'
 
 spring:
   application:

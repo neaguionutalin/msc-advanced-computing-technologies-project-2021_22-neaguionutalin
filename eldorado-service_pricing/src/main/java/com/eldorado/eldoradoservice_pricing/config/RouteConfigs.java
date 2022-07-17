@@ -18,7 +18,5 @@ public class RouteConfigs {
   @Data
   public static class RouteConfig {
     private String from;
-    private String to;
-    private String deadletter;
   }
 }
