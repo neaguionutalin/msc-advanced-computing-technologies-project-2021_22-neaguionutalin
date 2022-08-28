@@ -24,7 +24,7 @@ public class PricingImportService {
   private final EventPublisher eventPublisher;
   private final AppConfig appConfig;
   private final PricingMapper pricingMapper;
-  private final RouteConfig pricingRoute;
+  private final RouteConfig pricingSendingRoute;
 
   public void importPrices() {
     ResponseEntity<PricingDTO[]> responseEntity =
@@ -38,6 +38,6 @@ public class PricingImportService {
         pricingMapper.mapToMarketData(List.of(Objects.requireNonNull(responseEntity.getBody())));
     marketDataDTO.forEach(
         md ->
-            eventPublisher.publish(pricingRoute.getTo(), md, md.getBody().getMdReqId().toString()));
+            eventPublisher.publish(pricingSendingRoute.getTo(), md, md.getBody().getMdReqId().toString()));
   }
 }

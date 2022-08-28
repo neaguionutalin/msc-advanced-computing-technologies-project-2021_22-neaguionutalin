@@ -28,6 +28,7 @@ public class PricingMapper {
 
   public List<MarketDataDTO> mapToMarketData(List<PricingDTO> pricingDTOS) {
     return pricingDTOS.stream()
+        .filter(t -> t.getPrice() != null)
         .map(
             pricingDTO ->
                 MarketDataDTO.builder()

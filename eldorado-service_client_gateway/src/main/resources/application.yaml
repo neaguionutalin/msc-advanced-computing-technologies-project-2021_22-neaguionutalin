@@ -1,29 +1,20 @@
 server:
-  port: 9096
+  port: 9099
 
 schema_name: ${spring.application.name}
 
-vendor:
-  uri: 'http://localhost:9095'
-  market-data: '/api/v1/mock/pricing'
-  vendor-comp-id: 'VENDORMOCK'
-  platform-comp-id: 'ELDORADO'
-  commission: 0.05
-  currency: 'USD'
-
-route-config:
-  pricing:
-    to: 'activemq:topic:VirtualTopic.pricing.marketdata?jmsMessageType=Text&testConnectionOnStartup=true'
+cg:
+  comp-id: 'ELDORADO'
+  jwt:
+    secret: ${JWT_SECRET}
+    expiry: 3600000
+  market-data:
+    base-url: ${MARKET_DATA_BASE_URL}
+    path: ${MARKET_DATA_PATH}
 
 spring:
   application:
-    name: vendor-service
-  activemq:
-    broker-url: ${ACTIVEMQ_HOST}
-    password: ${ACTIVEMQ_PASSWORD}
-    user: ${ACTIVEMQ_USERNAME}
-    pool:
-      enabled: true
+    name: client-gateway
   datasource:
     url: jdbc:mysql://${mysql_rds_host}:${mysql_rds_port}/${schema_name}?createDatabaseIfNotExist=true
     hikari:
@@ -59,3 +50,18 @@ spring:
       enabled: true
       rollback-file: /app/service/liquibase/rollback.sql
       test-rollback-on-update: true
+  security:
+    oauth2:
+      client:
+        registration:
+          auth0:
+            client-id: li60j4AT8iEanlXGjzoMNLthqB7CC4L0
+            client-secret: YOUR_CLIENT_SECRET
+            scope:
+              - openid
+              - profile
+              - email
+        provider:
+          auth0:
+            issuer-uri: https://eldorado-birkbeck.us.auth0.com/
+

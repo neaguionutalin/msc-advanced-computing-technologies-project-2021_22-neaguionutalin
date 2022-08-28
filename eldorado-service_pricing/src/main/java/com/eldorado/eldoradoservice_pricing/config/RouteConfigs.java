@@ -9,14 +9,16 @@ import org.springframework.context.annotation.Configuration;
 @Data
 public class RouteConfigs {
 
-  @Bean
-  @ConfigurationProperties(prefix = "route-configs.pricing")
-  public RouteConfig pricingRoute() {
-    return new RouteConfig();
-  }
+    @Bean
+    @ConfigurationProperties(prefix = "route-config-pricing.pricing")
+    public RouteConfig priceImport(){
+        return new RouteConfig();
+    }
 
-  @Data
-  public static class RouteConfig {
-    private String from;
-  }
+    @Data
+    public static class RouteConfig {
+        private String from;
+        private String to;
+        private String deadletter;
+    }
 }

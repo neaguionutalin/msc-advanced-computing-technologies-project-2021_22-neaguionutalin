@@ -21,14 +21,20 @@ repositories {
 dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-data-redis'
     implementation 'org.springframework.boot:spring-boot-starter-web'
-    implementation 'org.springframework.boot:spring-boot-starter-data-redis'
     compileOnly 'org.projectlombok:lombok'
     annotationProcessor 'org.projectlombok:lombok'
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
 
     implementation 'org.apache.camel.springboot:camel-activemq-starter:3.16.0'
     implementation 'org.apache.camel.springboot:camel-spring-boot-starter:3.16.0'
-    implementation 'org.apache.camel.springboot:camel-jackson-starter:3.16.0'
+    implementation 'org.apache.camel:camel-jackson:3.16.0'
+    implementation 'org.springframework.boot:spring-boot-starter-logging'
+    implementation 'org.springframework.boot:spring-boot-starter-actuator'
+
+    implementation 'com.fasterxml.jackson.core:jackson-core:2.13.3'
+    implementation 'com.fasterxml.jackson.core:jackson-databind:2.13.3'
+    implementation 'com.fasterxml.jackson.datatype:jackson-datatype-jsr310'
+    implementation 'org.apache.camel.springboot:camel-jackson-starter:3.10.0'   //do not upgrade
     implementation 'org.apache.camel:camel-jackson:3.16.0'
 }
 

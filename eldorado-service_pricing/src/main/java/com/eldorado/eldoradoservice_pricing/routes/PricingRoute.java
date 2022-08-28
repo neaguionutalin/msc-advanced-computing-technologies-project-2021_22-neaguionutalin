@@ -12,12 +12,12 @@ import org.springframework.stereotype.Controller;
 @RequiredArgsConstructor
 public class PricingRoute extends RouteBuilder {
 
-  private final RouteConfig pricingRoute;
+  private final RouteConfig priceImport;
   private final PricingService pricingService;
 
   @Override
   public void configure() {
-    from(pricingRoute.getFrom())
+    from(priceImport.getFrom())
         .unmarshal()
         .json(JsonLibrary.Jackson, MarketDataDTO.class)
         .bean(pricingService);

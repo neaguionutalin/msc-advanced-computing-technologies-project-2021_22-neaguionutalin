@@ -1,25 +1,26 @@
 server:
   port: 9097
 
-route-configs:
+route-config-pricing:
   pricing:
     from: 'activemq:queue:Consumer.${spring.application.name}.VirtualTopic.pricing.marketdata?jmsMessageType=Text&testConnectionOnStartup=true'
+
+pricing:
+  expiry: 5000
 
 spring:
   application:
     name: 'pricing'
-    redis:
-      client-name: ${spring.application.name}-${HOSTNAME}
-      host: ${REDIS_HOST}
-      port: ${REDIS_CLUSTER_PORT}
-      password: ${REDIS_TOKEN}
-      ssl: {REDIS_SSL}
-    activemq:
-      broker-url: ${ACTIVEMQ_HOST}
-      password: ${ACTIVEMQ_PASSWORD}
-      user: ${ACTIVEMQ_USERNAME}
-      pool:
-        enabled: true
+  redis:
+    client-name: ${spring.application.name}-${HOSTNAME}
+    host: ${REDIS_HOST}
+    port: ${REDIS_PORT}
+  activemq:
+    broker-url: ${ACTIVEMQ_HOST}
+    password: ${ACTIVEMQ_PASSWORD}
+    user: ${ACTIVEMQ_USERNAME}
+    pool:
+      enabled: true
 
 camel:
   component:
@@ -27,7 +28,6 @@ camel:
       broker-url: ${ACTIVEMQ_HOST}
       username: ${ACTIVEMQ_USERNAME}
       password: ${ACTIVEMQ_PASSWORD}
-      client-id: ${spring.application.name}-${HOSTNAME}
   dataformat:
     json-jackson:
       module-class-names: com.fasterxml.jackson.datatype.jsr310.JavaTimeModule

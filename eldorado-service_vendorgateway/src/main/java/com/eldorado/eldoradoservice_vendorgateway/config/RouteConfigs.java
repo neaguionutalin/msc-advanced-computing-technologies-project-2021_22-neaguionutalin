@@ -11,7 +11,7 @@ public class RouteConfigs {
 
     @Bean
     @ConfigurationProperties(prefix = "route-config.pricing")
-    public RouteConfig pricingRoute(){
+    public RouteConfig pricingSendingRoute(){
         return new RouteConfig();
     }
 
