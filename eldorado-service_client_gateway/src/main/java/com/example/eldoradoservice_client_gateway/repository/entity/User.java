@@ -27,6 +27,10 @@ public class User implements UserDetails {
   @NonNull private String email;
   @NonNull @JsonIgnore private String password;
   @NonNull @JsonIgnore private String salt;
+
+  @ManyToOne
+  private Institution institution;
+
   private OffsetDateTime createdOn;
   private OffsetDateTime modifiedOn;
 

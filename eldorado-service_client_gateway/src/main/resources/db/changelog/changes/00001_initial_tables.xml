@@ -49,40 +49,12 @@
         </createTable>
     </changeSet>
 
-    <changeSet id="00001-4" author="alin">
-        <createTable tableName="permissions">
-            <column name="id" type="BINARY(16)">
-                <constraints primaryKey="true"/>
-            </column>
-            <column name="name" type="VARCHAR(255)">
-                <constraints nullable="false"/>
-            </column>
-            <column name="created_on" type="DATETIME(6)">
-                <constraints nullable="false"/>
-            </column>
-            <column name="modified_on" type="DATETIME(6)">
-                <constraints nullable="false"/>
-            </column>
-        </createTable>
-    </changeSet>
-
     <changeSet id="00001-5" author="alin">
         <createTable tableName="user_roles_link">
             <column name="user_id" type="BINARY(16)">
                 <constraints primaryKey="true"/>
             </column>
             <column name="role_id" type="BINARY(16)">
-                <constraints primaryKey="true"/>
-            </column>
-        </createTable>
-    </changeSet>
-
-    <changeSet id="00001-6" author="alin">
-        <createTable tableName="role_permissions_link">
-            <column name="role_id" type="BINARY(16)">
-                <constraints primaryKey="true"/>
-            </column>
-            <column name="permission_id" type="BINARY(16)">
                 <constraints primaryKey="true"/>
             </column>
         </createTable>
@@ -96,23 +68,44 @@
     </changeSet>
 
     <changeSet id="00001-8" author="alin">
-        <addForeignKeyConstraint baseTableName="user_roles_link" baseColumnNames="user_id"
+        <addForeignKeyConstraint baseTableName="user_roles_link" baseColumnNames="role_id"
                                  constraintName="UserRolesLink-Roles"
                                  referencedTableName="roles"
                                  referencedColumnNames="id"/>
     </changeSet>
 
-    <changeSet id="00001-9" author="alin">
-        <addForeignKeyConstraint baseTableName="role_permissions_link" baseColumnNames="role_id"
-                                 constraintName="RolePermissionsLink-Roles"
-                                 referencedTableName="roles"
-                                 referencedColumnNames="id"/>
+    <changeSet id="00001-11" author="alin">
+        <createTable tableName="institutions">
+            <column name="id" type="BINARY(16)">
+                <constraints nullable="false" primaryKey="true"/>
+            </column>
+            <column name="name" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="friendly_comp_id" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="created_on" type="DATETIME(6)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="modified_on" type="DATETIME(6)">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
     </changeSet>
 
-    <changeSet id="00001-10" author="alin">
-        <addForeignKeyConstraint baseTableName="role_permissions_link" baseColumnNames="permission_id"
-                                 constraintName="RolePermissionsLink-Permissions"
-                                 referencedTableName="permissions"
+    <changeSet id="00001-12" author="alin">
+        <addColumn tableName="users">
+            <column name="institution_id" type="BINARY(16)">
+                <constraints nullable="false"/>
+            </column>
+        </addColumn>
+    </changeSet>
+
+    <changeSet id="00001-13" author="alin">
+        <addForeignKeyConstraint baseTableName="users" baseColumnNames="institution_id"
+                                 constraintName="user-institutions-fk"
+                                 referencedTableName="institutions"
                                  referencedColumnNames="id"/>
     </changeSet>
 

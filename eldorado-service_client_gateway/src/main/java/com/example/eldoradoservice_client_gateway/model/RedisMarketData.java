@@ -1,10 +1,7 @@
 package com.example.eldoradoservice_client_gateway.model;
 
 import com.example.eldoradoservice_client_gateway.model.enums.MarketDataType;
-import lombok.Data;
-import lombok.EqualsAndHashCode;
-import lombok.Setter;
-import lombok.ToString;
+import lombok.*;
 import lombok.experimental.SuperBuilder;
 
 import java.util.List;
@@ -13,10 +10,11 @@ import java.util.List;
 @Data
 @EqualsAndHashCode
 @ToString
-@Setter
+@AllArgsConstructor
+@NoArgsConstructor
 public class RedisMarketData {
 
-  private final MarketDataType type;
-  private final List<BidAndOffer> bids;
-  private final List<BidAndOffer> offers;
+  private MarketDataType type;
+  private List<BidAndOffer> bids;
+  private List<BidAndOffer> offers;
 }

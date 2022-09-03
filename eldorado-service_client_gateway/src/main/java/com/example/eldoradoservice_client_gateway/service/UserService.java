@@ -1,15 +1,17 @@
 package com.example.eldoradoservice_client_gateway.service;
 
+import com.example.eldoradoservice_client_gateway.exceptions.InstitutionDoesNotExistException;
 import com.example.eldoradoservice_client_gateway.exceptions.UserAlreadyExistsException;
 import com.example.eldoradoservice_client_gateway.model.AuthorizationDTO;
 import com.example.eldoradoservice_client_gateway.model.LoginDTO;
 import com.example.eldoradoservice_client_gateway.model.UserDTO;
+import com.example.eldoradoservice_client_gateway.repository.entity.Institution;
 import com.example.eldoradoservice_client_gateway.repository.entity.User;
+import com.example.eldoradoservice_client_gateway.repository.repo.InstitutionsRepository;
 import com.example.eldoradoservice_client_gateway.repository.repo.RolesRepository;
 import com.example.eldoradoservice_client_gateway.repository.repo.UsersRepository;
 import com.example.eldoradoservice_client_gateway.security.JwtUtils;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -29,10 +31,15 @@ public class UserService {
   private final RolesRepository rolesRepository;
   private final AuthenticationManager authenticationManager;
   private final JwtUtils jwtUtils;
+  private final InstitutionsRepository institutionsRepository;
 
   public User register(UserDTO userDTO) {
     Optional<User> userOptional = usersRepository.findByEmail(userDTO.getEmail());
     if (userOptional.isPresent()) throw new UserAlreadyExistsException(userDTO.getEmail());
+    Optional<Institution> institutionOptional =
+        institutionsRepository.findByFriendlyCompId(userDTO.getInstitutionCompId());
+    if (institutionOptional.isEmpty())
+      throw new InstitutionDoesNotExistException(userDTO.getInstitutionCompId());
     String salt = BCrypt.gensalt();
     User user =
         User.builder()
@@ -44,6 +51,7 @@ public class UserService {
             .roles(
                 rolesRepository.findAllByNameIn(
                     userDTO.getRoles() != null ? userDTO.getRoles() : List.of()))
+            .institution(institutionOptional.get())
             .createdOn(OffsetDateTime.now())
             .modifiedOn(OffsetDateTime.now())
             .build();

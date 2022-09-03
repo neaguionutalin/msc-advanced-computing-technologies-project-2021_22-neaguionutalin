@@ -1,5 +1,6 @@
 package com.example.eldoradoservice_client_gateway.model.enums;
 
+import com.fasterxml.jackson.annotation.JsonValue;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 
@@ -9,5 +10,5 @@ public enum QuoteCondition {
   ACTIVE("A"),
   INACTIVE("B");
 
-  private final String code;
+  @JsonValue private final String code;
 }
