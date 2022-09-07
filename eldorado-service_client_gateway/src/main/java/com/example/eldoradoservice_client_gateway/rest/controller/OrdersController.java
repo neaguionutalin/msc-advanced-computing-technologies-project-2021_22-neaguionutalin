@@ -1,7 +1,7 @@
 package com.example.eldoradoservice_client_gateway.rest.controller;
 
-import com.example.eldoradoservice_client_gateway.model.orders.ExecutionReport;
-import com.example.eldoradoservice_client_gateway.model.orders.NewOrderRequest;
+import com.example.eldoradoservice_client_gateway.model.orders.ExecutionReportBody;
+import com.example.eldoradoservice_client_gateway.model.orders.NewOrderBody;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
@@ -15,12 +15,12 @@ import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 public class OrdersController {
 
   @PostMapping(consumes = APPLICATION_JSON_VALUE)
-  public ExecutionReport newOrder(@RequestBody NewOrderRequest newOrderRequest) {
+  public ExecutionReportBody newOrder(@RequestBody NewOrderBody newOrderBody) {
     return null;
   }
 
   @GetMapping(path = "/{clOrdId}")
-  public List<ExecutionReport> getExecutionReports(@PathVariable String clOrdId) {
+  public List<ExecutionReportBody> getExecutionReports(@PathVariable String clOrdId) {
     return null;
   }
 }

@@ -1,6 +1,5 @@
-package com.example.eldoradoservice_client_gateway.model.orders;
+package com.eldorado.eldoradosercice_oms.model;
 
-import com.example.eldoradoservice_client_gateway.model.HeaderDTO;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;

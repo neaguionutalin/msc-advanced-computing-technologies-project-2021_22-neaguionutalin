@@ -10,7 +10,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class ExecutionReport {
+public class NewOrder {
   private HeaderDTO header;
-  private ExecutionReportBody body;
+  private NewOrderBody body;
 }

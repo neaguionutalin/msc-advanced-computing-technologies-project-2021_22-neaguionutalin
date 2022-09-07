@@ -15,7 +15,7 @@ import java.time.OffsetDateTime;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class NewOrderRequest {
+public class NewOrderBody {
   private String symbol;
   private String orderQty;
   private Side side;

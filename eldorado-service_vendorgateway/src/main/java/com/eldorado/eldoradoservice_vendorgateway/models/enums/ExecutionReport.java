@@ -1,6 +1,7 @@
-package com.example.eldoradoservice_client_gateway.model.orders;
+package com.eldorado.eldoradoservice_vendorgateway.models.enums;
 
-import com.example.eldoradoservice_client_gateway.model.HeaderDTO;
+import com.eldorado.eldoradoservice_vendorgateway.models.ExecutionReportBody;
+import com.eldorado.eldoradoservice_vendorgateway.models.HeaderDTO;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;

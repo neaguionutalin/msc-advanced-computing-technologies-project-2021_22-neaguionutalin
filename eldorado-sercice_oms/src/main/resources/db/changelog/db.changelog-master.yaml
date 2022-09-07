@@ -1,0 +1,4 @@
+databaseChangeLog:
+  - include:
+      file: ./changes/00001_initial_tables.xml
+      relativeToChangelogFile: true
