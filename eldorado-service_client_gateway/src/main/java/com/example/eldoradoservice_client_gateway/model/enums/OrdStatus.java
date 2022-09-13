@@ -7,6 +7,7 @@ import lombok.Getter;
 @AllArgsConstructor
 @Getter
 public enum OrdStatus {
+  PENDING_NEW("A"),
   NEW("0"),
   PARTIALLY_FILLED("1"),
   FILLED("2"),

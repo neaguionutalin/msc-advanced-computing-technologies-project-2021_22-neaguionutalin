@@ -1,5 +1,6 @@
 package com.eldorado.eldoradosercice_oms.exceptions;
 
+import com.eldorado.eldoradosercice_oms.model.ExecutionReport;
 import com.eldorado.eldoradosercice_oms.model.NewOrder;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -14,6 +15,7 @@ public abstract class OmsException extends RuntimeException {
 
   private ErrorCode errorCode;
   private NewOrder newOrder;
+  private ExecutionReport executionReport;
 
   protected OmsException(Throwable throwable) {
     super(throwable);

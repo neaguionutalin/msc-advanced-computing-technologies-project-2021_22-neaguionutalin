@@ -47,6 +47,15 @@
             <column name="leaves_qty" type="DECIMAL(14,6)">
                 <constraints nullable="false"/>
             </column>
+            <column name="last_qty" type="DECIMAL(14,6)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="last_px" type="DECIMAL(14,6)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="avg_px" type="DECIMAL(14,6)">
+                <constraints nullable="false"/>
+            </column>
             <column name="parent_order_id" type="BINARY(16)">
                 <constraints nullable="true"/>
             </column>
@@ -158,6 +167,23 @@
                                  constraintName="orders-child-orders"
                                  referencedTableName="orders"
                                  referencedColumnNames="id"/>
+    </changeSet>
+
+    <changeSet id="00001-9" author="alin">
+        <modifyDataType tableName="orders" columnName="ord_status" newDataType="ENUM('A', '0', '1', '2', '8')"/>
+    </changeSet>
+
+    <changeSet id="00001-10" author="alin">
+        <addColumn tableName="orders">
+            <column name="cum_qty" type="DECIMAL(14,6)"/>
+        </addColumn>
+    </changeSet>
+    
+    <changeSet id="00001-11" author="alin">
+        <addColumn tableName="orders">
+            <column name="sender_comp_id" type="VARCHAR(255)"/>
+            <column name="target_comp_id" type="VARCHAR(255)"/>
+        </addColumn>
     </changeSet>
 
 </databaseChangeLog>

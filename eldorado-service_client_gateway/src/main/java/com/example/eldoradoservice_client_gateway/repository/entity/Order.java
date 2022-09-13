@@ -1,16 +1,20 @@
-package com.eldorado.eldoradosercice_oms.repository.entities;
+package com.example.eldoradoservice_client_gateway.repository.entity;
 
-import com.eldorado.eldoradosercice_oms.model.enums.*;
+import com.example.eldoradoservice_client_gateway.model.enums.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import javax.persistence.*;
+import javax.persistence.Entity;
+import javax.persistence.Enumerated;
+import javax.persistence.Id;
+import javax.persistence.Table;
 import java.math.BigDecimal;
 import java.time.OffsetDateTime;
-import java.util.List;
 import java.util.UUID;
+
+import static javax.persistence.EnumType.STRING;
 
 @Entity
 @Table(name = "orders")
@@ -31,21 +35,9 @@ public class Order {
   private TimeInForce timeInForce;
   private OffsetDateTime transactTime;
   private BigDecimal leavesQty;
-  private BigDecimal cumQty;
-  private BigDecimal lastPx;
-  private BigDecimal lastQty;
-  private BigDecimal avgPx;
   private OrdStatus ordStatus;
   private String senderCompId;
   private String targetCompId;
   private OffsetDateTime createdOn;
   private OffsetDateTime modifiedOn;
-
-  @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-  @JoinColumn(name = "parent_order_id")
-  private Order parentOrder;
-
-  @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-  @JoinColumn(name = "parent_order_id")
-  private List<Order> childOrders;
 }

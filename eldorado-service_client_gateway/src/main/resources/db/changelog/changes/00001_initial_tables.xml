@@ -109,5 +109,157 @@
                                  referencedColumnNames="id"/>
     </changeSet>
 
+    <changeSet id="00001-14" author="alin">
+        <createTable tableName="orders">
+            <column name="id" type="BINARY(16)">
+                <constraints nullable="false" primaryKey="true"/>
+            </column>
+            <column name="order_id" type="BINARY(16)">
+                <constraints nullable="true"/>
+            </column>
+            <column name="symbol" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="order_qty" type="DECIMAL(14,6)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="side" type="ENUM('1','2')">
+                <constraints nullable="false"/>
+            </column>
+            <column name="currency" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="product" type="ENUM('2')">
+                <constraints nullable="false"/>
+            </column>
+            <column name="ord_type" type="ENUM('1')">
+                <constraints nullable="false"/>
+            </column>
+            <column name="cl_ord_id" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="time_in_force" type="ENUM('3')">
+                <constraints nullable="false"/>
+            </column>
+            <column name="transact_time" type="DATETIME(6)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="ord_status" type="ENUM('0','1','2','8')">
+                <constraints nullable="false"/>
+            </column>
+            <column name="leaves_qty" type="DECIMAL(14,6)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="created_on" type="DATETIME(6)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="modified_on" type="DATETIME(6)">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+
+    <changeSet id="00001-15" author="alin">
+        <createTable tableName="execution_reports">
+            <column name="exec_id" type="BINARY(16)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="avg_px" type="DECIMAL(14,6)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="cl_ord_id" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="order_id" type="BINARY(16)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="cum_qty" type="DECIMAL(14,6)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="currency" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="last_px" type="DECIMAL(14,6)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="last_qty" type="DECIMAL(14,6)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="order_qty" type="DECIMAL(14,6)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="ord_status" type="ENUM('0','1','2','8')">
+                <constraints nullable="false"/>
+            </column>
+            <column name="ord_type" type="ENUM('1')">
+                <constraints nullable="false"/>
+            </column>
+            <column name="side" type="ENUM('1','2')">
+                <constraints nullable="false"/>
+            </column>
+            <column name="symbol" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="text" type="VARCHAR(255)"/>
+            <column name="transact_time" type="DATETIME(6)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="exec_type" type="ENUM('0','8','F')">
+                <constraints nullable="false"/>
+            </column>
+            <column name="leaves_qty" type="DECIMAL(14,6)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="product" type="ENUM('2')">
+                <constraints nullable="false"/>
+            </column>
+            <column name="sender_comp_id" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="target_comp_id" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="created_on" type="DATETIME(6)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="modified_on" type="DATETIME(6)">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+
+    <changeSet id="00001-16" author="alin">
+        <createIndex tableName="orders" indexName="order-cl-ord-id-ids">
+            <column name="cl_ord_id"/>
+        </createIndex>
+    </changeSet>
+
+    <changeSet id="00001-17" author="alin">
+        <createIndex tableName="execution_reports" indexName="execution_reports-cl-ord-id-ids">
+            <column name="cl_ord_id"/>
+        </createIndex>
+    </changeSet>
+
+    <changeSet id="00001-18" author="alin">
+        <addForeignKeyConstraint baseTableName="execution_reports" baseColumnNames="cl_ord_id"
+                                 constraintName="execution_reports_orders"
+                                 referencedTableName="orders"
+                                 referencedColumnNames="cl_ord_id"/>
+    </changeSet>
+
+    <changeSet id="00001-19" author="alin">
+        <addColumn tableName="orders">
+            <column name="sender_comp_id" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="target_comp_id" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+        </addColumn>
+    </changeSet>
+    <changeSet id="00001-20" author="alin">
+        <modifyDataType tableName="orders" columnName="ord_status" newDataType="ENUM('A', '0', '1', '2', '8')"/>
+    </changeSet>
+
 </databaseChangeLog>
 

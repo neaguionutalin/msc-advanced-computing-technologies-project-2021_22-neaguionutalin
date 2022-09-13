@@ -9,6 +9,7 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.math.BigDecimal;
 import java.time.OffsetDateTime;
 
 @Data
@@ -17,7 +18,7 @@ import java.time.OffsetDateTime;
 @NoArgsConstructor
 public class NewOrderBody {
   private String symbol;
-  private String orderQty;
+  private BigDecimal orderQty;
   private Side side;
   private String currency;
   private Product product;

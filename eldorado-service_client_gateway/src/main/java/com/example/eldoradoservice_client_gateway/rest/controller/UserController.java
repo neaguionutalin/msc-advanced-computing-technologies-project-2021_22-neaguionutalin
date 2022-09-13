@@ -6,13 +6,11 @@ import com.example.eldoradoservice_client_gateway.model.UserDTO;
 import com.example.eldoradoservice_client_gateway.repository.entity.User;
 import com.example.eldoradoservice_client_gateway.service.UserService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.security.authentication.BadCredentialsException;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-
-import javax.servlet.http.HttpServletRequest;
 
 import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 
@@ -31,6 +29,7 @@ public class UserController {
       value = "/register",
       produces = APPLICATION_JSON_VALUE,
       consumes = APPLICATION_JSON_VALUE)
+  @PreAuthorize("hasRole('BROKER')")
   public User addUser(@RequestBody UserDTO userDTO) {
     return userService.register(userDTO);
   }

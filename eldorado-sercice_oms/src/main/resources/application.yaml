@@ -5,6 +5,7 @@ schema_name: ${spring.application.name}
 
 oms:
   platform-comp_id: 'ELDORADO'
+  market-data-url: ${MARKET_DATA_URL}
 
 route-config:
   new-order:

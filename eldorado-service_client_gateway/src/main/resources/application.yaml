@@ -12,6 +12,11 @@ cg:
     base-url: ${MARKET_DATA_BASE_URL}
     path: ${MARKET_DATA_PATH}
 
+route-config:
+  new-order:
+    from: 'activemq:queue:Consumer.${spring.application.name}.VirtualTopic.oms.execution-reports?jmsMessageType=Text&testConnectionOnStartup=true'
+    to: 'activemq:topic:VirtualTopic.${spring.application.name}.new-order?jmsMessageType=Text&testConnectionOnStartup=true'
+
 spring:
   application:
     name: client-gateway
@@ -50,3 +55,20 @@ spring:
       enabled: true
       rollback-file: /app/service/liquibase/rollback.sql
       test-rollback-on-update: true
+  activemq:
+    broker-url: ${ACTIVEMQ_HOST}
+    password: ${ACTIVEMQ_PASSWORD}
+    user: ${ACTIVEMQ_USERNAME}
+    pool:
+      enabled: true
+
+camel:
+  component:
+    activemq:
+      broker-url: ${ACTIVEMQ_HOST}
+      username: ${ACTIVEMQ_USERNAME}
+      password: ${ACTIVEMQ_PASSWORD}
+  dataformat:
+    json-jackson:
+      module-class-names: com.fasterxml.jackson.datatype.jsr310.JavaTimeModule
+      disable-features: WRITE_DATE_TIMESTAMPS_AS_NANOSECONDS,WRITE_DATES_AS_TIMESTAMPS
