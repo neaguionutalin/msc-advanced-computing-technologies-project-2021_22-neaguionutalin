@@ -38,14 +38,7 @@ public class Order {
   private OrdStatus ordStatus;
   private String senderCompId;
   private String targetCompId;
+  private UUID parentOrderId;
   private OffsetDateTime createdOn;
   private OffsetDateTime modifiedOn;
-
-  @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-  @JoinColumn(name = "parent_order_id")
-  private Order parentOrder;
-
-  @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-  @JoinColumn(name = "parent_order_id")
-  private List<Order> childOrders;
 }

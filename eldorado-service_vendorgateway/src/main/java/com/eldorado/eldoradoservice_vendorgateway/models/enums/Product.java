@@ -1,5 +1,6 @@
 package com.eldorado.eldoradoservice_vendorgateway.models.enums;
 
+import com.fasterxml.jackson.annotation.JsonValue;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 
@@ -8,5 +9,5 @@ import lombok.Getter;
 public enum Product {
   COMMODITY("2");
 
-  private final String code;
+  @JsonValue private final String code;
 }

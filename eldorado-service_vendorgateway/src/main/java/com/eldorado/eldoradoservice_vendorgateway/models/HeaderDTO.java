@@ -15,6 +15,5 @@ public class HeaderDTO {
     private MsgType msgType;
     private String senderCompId;
     private String targetCompId;
-    private String onBehalfOfCompId;
     private OffsetDateTime sendingTime;
 }

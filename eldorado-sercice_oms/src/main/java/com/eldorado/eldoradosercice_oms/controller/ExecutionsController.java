@@ -21,6 +21,7 @@ import org.springframework.stereotype.Controller;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.time.OffsetDateTime;
+import java.util.List;
 import java.util.Optional;
 import java.util.Set;
 import java.util.UUID;
@@ -57,9 +58,16 @@ public class ExecutionsController {
     executionReportsRepository.saveAndFlush(childExecution);
     ordersRepository.saveAndFlush(optionalChildOrder.get());
 
-    Order parentOrder = optionalChildOrder.get().getParentOrder();
+    Order parentOrder =
+        ordersRepository
+            .findById(optionalChildOrder.get().getParentOrderId())
+            .orElseThrow(() -> new OrderNotFoundException(executionReport));
+
+    List<Order> childOrders =
+        ordersRepository.findAllByParentOrderId(optionalChildOrder.get().getParentOrderId());
+
     Set<OrdStatus> ordStatuses =
-        parentOrder.getChildOrders().stream().map(Order::getOrdStatus).collect(Collectors.toSet());
+        childOrders.stream().map(Order::getOrdStatus).collect(Collectors.toSet());
     OrdStatus ordStatus;
     if (ordStatuses.contains(NEW)) {
       if (ordStatuses.contains(FILLED) || ordStatuses.contains(PARTIALLY_FILLED))
@@ -74,26 +82,33 @@ public class ExecutionsController {
         || executionReport.getBody().getOrdStatus() == REJECTED) avgPx = parentOrder.getAvgPx();
     else
       avgPx =
-          (parentOrder.getChildOrders().stream()
+          (childOrders.stream()
                   .map(t -> t.getAvgPx().multiply(t.getCumQty()).setScale(2, RoundingMode.DOWN))
                   .reduce(BigDecimal::add)
                   .orElse(BigDecimal.ZERO))
               .divide(
-                  parentOrder.getChildOrders().stream()
-                      .map(Order::getCumQty)
-                      .reduce(BigDecimal::add)
-                      .orElse(BigDecimal.ONE),
+                  childOrders.stream()
+                              .map(Order::getCumQty)
+                              .reduce(BigDecimal::add)
+                              .orElse(BigDecimal.ONE)
+                              .compareTo(BigDecimal.ZERO)
+                          == 0
+                      ? BigDecimal.ONE
+                      : childOrders.stream()
+                          .map(Order::getCumQty)
+                          .reduce(BigDecimal::add)
+                          .orElse(BigDecimal.ONE),
                   2,
                   RoundingMode.DOWN);
     parentOrder =
         parentOrder.toBuilder()
             .leavesQty(
-                parentOrder.getChildOrders().stream()
+                childOrders.stream()
                     .map(Order::getLeavesQty)
                     .reduce(BigDecimal::add)
                     .orElse(BigDecimal.ZERO))
             .cumQty(
-                parentOrder.getChildOrders().stream()
+                childOrders.stream()
                     .map(Order::getCumQty)
                     .reduce(BigDecimal::add)
                     .orElse(BigDecimal.ZERO))

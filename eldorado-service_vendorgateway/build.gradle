@@ -1,5 +1,5 @@
 plugins {
-    id 'org.springframework.boot' version '2.7.0'
+    id 'org.springframework.boot' version '2.7.3'
     id 'io.spring.dependency-management' version '1.0.11.RELEASE'
     id 'java'
 }
@@ -28,8 +28,8 @@ dependencies {
 
     implementation 'org.apache.camel.springboot:camel-activemq-starter:3.16.0'
     implementation 'org.apache.camel.springboot:camel-spring-boot-starter:3.16.0'
-    implementation 'org.apache.camel.springboot:camel-jackson-starter:3.16.0'
     implementation 'org.apache.camel:camel-jackson:3.16.0'
+
 
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
 
@@ -45,6 +45,7 @@ dependencies {
     implementation 'com.fasterxml.jackson.core:jackson-core:2.13.3'
     implementation 'com.fasterxml.jackson.core:jackson-databind:2.13.3'
     implementation 'com.fasterxml.jackson.datatype:jackson-datatype-jsr310'
+    implementation 'org.apache.camel.springboot:camel-jackson-starter:3.10.0'   //do not upgrade
 
 //    implementation 'org.apache.activemq:activemq-client:5.18.8'
 //    implementation 'org.apache.activemq:activemq-pool:5.18.8'

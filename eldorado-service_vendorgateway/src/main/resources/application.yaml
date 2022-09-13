@@ -15,7 +15,7 @@ route-config:
   pricing:
     to: 'activemq:topic:VirtualTopic.pricing.marketdata?jmsMessageType=Text&testConnectionOnStartup=true'
   child-order:
-    to: 'activemq:topic:VirtualTopic.{spring.application.name}.${vendor.vendor-comp-id}.execution-reports?jmsMessageType=Text&testConnectionOnStartup=true'
+    to: 'activemq:topic:VirtualTopic.${spring.application.name}.${vendor.vendor-comp-id}.execution-reports?jmsMessageType=Text&testConnectionOnStartup=true'
     from: 'activemq:queue:Consumer.${spring.application.name}.VirtualTopic.oms.${vendor.vendor-comp-id}.new-order?jmsMessageType=Text&testConnectionOnStartup=true'
 
 spring:
@@ -62,3 +62,17 @@ spring:
       enabled: true
       rollback-file: /app/service/liquibase/rollback.sql
       test-rollback-on-update: true
+
+camel:
+  springboot:
+    main-run-controller: true
+    tracing: true
+  component:
+    activemq:
+      broker-url: ${ACTIVEMQ_HOST}
+      username: ${ACTIVEMQ_USERNAME}
+      password: ${ACTIVEMQ_PASSWORD}
+  dataformat:
+    json-jackson:
+      module-class-names: com.fasterxml.jackson.datatype.jsr310.JavaTimeModule
+      disable-features: WRITE_DATE_TIMESTAMPS_AS_NANOSECONDS,WRITE_DATES_AS_TIMESTAMPS

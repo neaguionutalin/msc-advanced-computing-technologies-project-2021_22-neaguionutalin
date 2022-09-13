@@ -15,7 +15,6 @@ import org.springframework.stereotype.Component;
 
 import java.math.BigDecimal;
 import java.time.OffsetDateTime;
-import java.util.List;
 import java.util.UUID;
 
 @Component
@@ -23,7 +22,7 @@ import java.util.UUID;
 public class NewOrderMapper {
   private final AppConfig appConfig;
 
-  public Order mapToOrder(NewOrder newOrder, List<Order> childOrders) {
+  public Order mapToOrder(NewOrder newOrder, UUID parentOrderId) {
     return Order.builder()
         .id(UUID.randomUUID())
         .orderId(newOrder.getMetadata() != null ? newOrder.getMetadata().getOrderId() : null)
@@ -44,7 +43,7 @@ public class NewOrderMapper {
         .ordStatus(OrdStatus.NEW)
         .senderCompId(newOrder.getHeader().getSenderCompId())
         .targetCompId(newOrder.getHeader().getTargetCompId())
-        .childOrders(childOrders)
+        .parentOrderId(parentOrderId)
         .createdOn(OffsetDateTime.now())
         .modifiedOn(OffsetDateTime.now())
         .build();
@@ -77,6 +76,7 @@ public class NewOrderMapper {
                 .execType(ExecType.NEW)
                 .leavesQty(newOrder.getBody().getOrderQty())
                 .product(newOrder.getBody().getProduct())
+                .orderQty(newOrder.getBody().getOrderQty())
                 .build())
         .build();
   }

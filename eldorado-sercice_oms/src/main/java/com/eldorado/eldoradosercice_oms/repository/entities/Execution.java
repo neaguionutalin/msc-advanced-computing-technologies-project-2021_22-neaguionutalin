@@ -32,25 +32,14 @@ public class Execution {
   private BigDecimal lastPx;
   private BigDecimal lastQty;
   private BigDecimal orderQty;
-
-  @Enumerated(STRING)
   private OrdStatus ordStatus;
-
-  @Enumerated(STRING)
   private OrdType ordType;
-
-  @Enumerated(STRING)
   private Side side;
-
   private String symbol;
   private String text;
   private OffsetDateTime transactTime;
-
-  @Enumerated(STRING)
   private ExecType execType;
-
   private BigDecimal leavesQty;
-  @Enumerated(STRING)
   private Product product;
   private String senderCompId;
   private String targetCompId;

@@ -15,10 +15,11 @@ public class OrderPersistenceService {
   private final OrdersRepository ordersRepository;
 
   public void saveOrders(List<NewOrder> newOrderList, NewOrder parentNewOrder) {
+    Order parentOrder = newOrderMapper.mapToOrder(parentNewOrder, null);
+    parentOrder = ordersRepository.saveAndFlush(parentOrder);
+    Order finalParentOrder = parentOrder;
     List<Order> childOrders =
-        newOrderList.stream().map(t -> newOrderMapper.mapToOrder(t, List.of())).toList();
-    Order parentOrder = newOrderMapper.mapToOrder(parentNewOrder, childOrders);
+        newOrderList.stream().map(t -> newOrderMapper.mapToOrder(t, finalParentOrder.getId())).toList();
     ordersRepository.saveAllAndFlush(childOrders);
-    ordersRepository.saveAndFlush(parentOrder);
   }
 }
