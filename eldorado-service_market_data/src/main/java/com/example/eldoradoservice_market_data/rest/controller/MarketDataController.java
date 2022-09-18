@@ -18,8 +18,7 @@ public class MarketDataController {
 
     @GetMapping(path = "/{marketDataType}/{symbol}")
     public RedisMarketData getMarketData(@PathVariable MarketDataType marketDataType,
-                                         @PathVariable String symbol,
-                                         @RequestParam(required = false) Optional<EntryType> entryType) {
-        return marketDataService.getMarketData(marketDataType, symbol, entryType);
+                                         @PathVariable String symbol) {
+        return marketDataService.getMarketData(marketDataType, symbol);
     }
 }

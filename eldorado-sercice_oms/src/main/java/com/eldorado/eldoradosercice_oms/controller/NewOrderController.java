@@ -37,6 +37,7 @@ public class NewOrderController {
     ExecutionReport executionReport = newOrderMapper.mapToExecutionReport(newOrder);
     Execution execution = newOrderMapper.mapToExecutionReport(executionReport);
     executionReportsRepository.saveAndFlush(execution);
+    exchange.getIn().setHeader("order_created", true);
     exchange.getIn().setBody(executionReport);
   }
 }

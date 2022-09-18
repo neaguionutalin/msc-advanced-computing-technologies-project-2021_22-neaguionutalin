@@ -24,24 +24,13 @@ public class MarketDataService {
   private final BidAndOfferMapper bidAndOfferMapper;
 
   public RedisMarketData getMarketData(
-      MarketDataType marketDataType, String symbol, Optional<EntryType> entryType) {
+      MarketDataType marketDataType, String symbol) {
     RedisKey redisKey = new RedisKey(symbol);
     Set<String> symbolKeysBids;
     Set<String> symbolKeysOffers;
     int end = marketDataType == MarketDataType.TOP ? 0 : -1;
-    if (entryType.isEmpty()) {
-      symbolKeysBids = stringRedisTemplate.keys(redisKey.getBidKey());
-      symbolKeysOffers = stringRedisTemplate.keys(redisKey.getOfferKey());
-    } else if (entryType.get() == BID) {
-      symbolKeysBids = stringRedisTemplate.keys(redisKey.getBidKey());
-      symbolKeysOffers = new HashSet<>();
-    } else if (entryType.get() == OFFER) {
-      symbolKeysBids = new HashSet<>();
-      symbolKeysOffers = stringRedisTemplate.keys(redisKey.getOfferKey());
-    } else {
-      symbolKeysBids = new HashSet<>();
-      symbolKeysOffers = new HashSet<>();
-    }
+    symbolKeysBids = stringRedisTemplate.keys(redisKey.getBidKey());
+    symbolKeysOffers = stringRedisTemplate.keys(redisKey.getOfferKey());
     List<String> bidKeys = new ArrayList<>();
     if (symbolKeysBids != null) bidKeys = new ArrayList<>(symbolKeysBids);
     List<String> offerKeys = new ArrayList<>();

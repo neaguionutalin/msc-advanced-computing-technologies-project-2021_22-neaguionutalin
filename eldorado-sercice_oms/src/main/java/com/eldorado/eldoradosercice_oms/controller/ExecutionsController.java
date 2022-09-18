@@ -52,6 +52,7 @@ public class ExecutionsController {
                 .lastQty(executionReport.getBody().getLastQty())
                 .lastPx(executionReport.getBody().getLastPx())
                 .orderId(executionReport.getBody().getOrderId())
+                .modifiedOn(OffsetDateTime.now())
                 .build());
     Execution childExecution = newOrderMapper.mapToExecutionReport(executionReport);
 

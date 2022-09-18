@@ -38,6 +38,7 @@ public class ExecutionReportsService {
             orderOptional.get().toBuilder()
                 .leavesQty(executionReport.getBody().getLeavesQty())
                 .ordStatus(executionReport.getBody().getOrdStatus())
+                .modifiedOn(OffsetDateTime.now())
                 .build());
     ordersRepository.saveAndFlush(orderOptional.get());
     Execution execution =
