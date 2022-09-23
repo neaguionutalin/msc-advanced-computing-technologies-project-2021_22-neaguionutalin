@@ -81,6 +81,38 @@ public class NewOrderMapper {
         .build();
   }
 
+  public ExecutionReport mapToRejectedExecutionReport(NewOrder newOrder) {
+    return ExecutionReport.builder()
+        .header(
+            HeaderDTO.builder()
+                .msgType(MsgType.EXECUTION_REPORT)
+                .senderCompId(appConfig.getPlatformCompId())
+                .targetCompId(newOrder.getHeader().getSenderCompId())
+                .sendingTime(OffsetDateTime.now())
+                .build())
+        .body(
+            ExecutionReportBody.builder()
+                .avgPx(BigDecimal.ZERO)
+                .clOrdId(newOrder.getBody().getClOrdId())
+                .orderId(newOrder.getMetadata().getOrderId())
+                .cumQty(BigDecimal.ZERO)
+                .currency(newOrder.getBody().getCurrency())
+                .execId(UUID.randomUUID())
+                .lastPx(BigDecimal.ZERO)
+                .lastQty(BigDecimal.ZERO)
+                .ordStatus(OrdStatus.REJECTED)
+                .ordType(newOrder.getBody().getOrdType())
+                .side(newOrder.getBody().getSide())
+                .symbol(newOrder.getBody().getSymbol())
+                .transactTime(OffsetDateTime.now())
+                .execType(ExecType.REJECTED)
+                .leavesQty(BigDecimal.ZERO)
+                .product(newOrder.getBody().getProduct())
+                .orderQty(newOrder.getBody().getOrderQty())
+                .build())
+        .build();
+  }
+
   public Execution mapToExecutionReport(ExecutionReport executionReport) {
     return Execution.builder()
         .execId(executionReport.getBody().getExecId())

@@ -21,7 +21,7 @@ public class PositionAvailabilityService {
     BigDecimal availableValue =
         executionReportsRepository.getClientPosition(
             newOrder.getHeader().getSenderCompId(), newOrder.getBody().getSymbol());
-    if (availableValue.compareTo(newOrder.getBody().getOrderQty()) <= 0)
+    if (availableValue.compareTo(newOrder.getBody().getOrderQty()) < 0)
       throw new NotEnoughPositionAvailable(availableValue, newOrder);
   }
 }
